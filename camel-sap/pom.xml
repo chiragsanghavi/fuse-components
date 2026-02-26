@@ -428,18 +428,22 @@
 		</profile>
 		<profile>
 			<id>repository</id>
+			<properties>
+				<!-- AS400-first path: avoid Linux-native test artifact fetches in this profile. -->
+				<skip.sap.native.copy>true</skip.sap.native.copy>
+				<envClassifier>as400-pase_64</envClassifier>
+				<envType>so</envType>
+				<native.lib.filename>libsapjco3</native.lib.filename>
+			</properties>
 			<modules>
-				<!-- these 6 SAP bundles are only used at build time as per ENTESB-5801 -->
-				<!-- NOT SUPPORT in 3.1.4
-                                <module>com.sap.conn.jco.linux.x86</module>
-				-->
+				<!-- AS400-first validation path: only build the IBM i/PASE fragment here. -->
+				<module>com.sap.conn.jco.os400.ppc64</module>
+				<!-- Temporarily disabled while iSeries path is stabilized.
 				<module>com.sap.conn.jco.linux.x86_64</module>
-				<!-- NOT SUPPORT in 3.1.4
-                                <module>com.sap.conn.jco.osx.x86</module>
-				-->
 				<module>com.sap.conn.jco.osx.x86_64</module>
 				<module>com.sap.conn.jco.win32.x86</module>
 				<module>com.sap.conn.jco.win32.x86_64</module>
+				-->
 			</modules>
 		</profile>
 	</profiles>
@@ -533,10 +537,8 @@
 			 - use maven-dependency-plugin to copy the SAP libraries to their target/ directory
 			 - will then provide system-scoped dependencies for next projects
 		-->
-		<!-- Not needed
 		<module>com.sap.conn.idoc</module>
 		<module>com.sap.conn.jco</module>
-		-->
 
 		<module>org.fusesource.camel.component.sap.model</module>
 		<module>org.fusesource.camel.component.sap.model.edit</module>

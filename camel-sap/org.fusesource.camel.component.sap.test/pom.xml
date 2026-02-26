@@ -21,6 +21,7 @@
     <properties>
         <lib.directory>${project.build.directory}/lib</lib.directory>
         <native.lib.directory>${project.build.directory}/jni</native.lib.directory>
+        <skip.sap.native.copy>false</skip.sap.native.copy>
     </properties>
 
     <build>
@@ -60,6 +61,7 @@
                             <goal>copy</goal>
                         </goals>
                         <configuration>
+                            <skip>${skip.sap.native.copy}</skip>
                             <stripVersion>true</stripVersion>
                             <outputDirectory>${native.lib.directory}</outputDirectory>
                             <artifactItems>

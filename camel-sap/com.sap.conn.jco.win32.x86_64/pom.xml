@@ -4,12 +4,12 @@
 	<parent>
 		<groupId>org.fusesource</groupId>
 		<artifactId>camel-sap-parent</artifactId>
-		<version>4.10.2-SNAPSHOT</version>
+		<version>4.10.2</version>
 		<relativePath>..</relativePath>
 	</parent>
 	<groupId>com.sap.conn.jco</groupId>
 	<artifactId>com.sap.conn.jco.win32.x86_64</artifactId>
-	<version>3.1.4.redhat-00001</version>
+	<version>3.1.13</version>
 	<packaging>eclipse-plugin</packaging>
 	<name>SAP Java Connector v3 - Native Library for Windows (64-bit x86) Plugin</name>
 	<url>http://www.fusesource.org</url>
@@ -69,7 +69,7 @@
 								<artifactItem>
 									<groupId>com.sap.conn.jco</groupId>
 									<artifactId>sapjco3</artifactId>
-									<version>3.1.4</version>
+									<version>3.1.13</version>
 									<classifier>win-x86_64</classifier>
 									<type>dll</type>
 									<overWrite>true</overWrite>

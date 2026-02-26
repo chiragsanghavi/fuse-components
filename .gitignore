@@ -19,3 +19,4 @@ overlays
 dependency-reduced-pom.xml
 **/*.jar
 **/*.test/data/test*.xml
+camel-sap/reference/
