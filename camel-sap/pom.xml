@@ -48,6 +48,29 @@
 		<dependencies>
 			<dependency>
 				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-bom</artifactId>
+				<version>${camel-version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<!-- Override inherited Fuse parent tooling snapshots with community Camel version. -->
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-tooling-util</artifactId>
+				<version>${camel-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-tooling-model</artifactId>
+				<version>${camel-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-tooling-maven</artifactId>
+				<version>${camel-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
 				<artifactId>camel-core-model</artifactId>
 				<version>${camel-version}</version>
 			</dependency>
