@@ -15,12 +15,12 @@
 	<parent>
 		<groupId>org.fusesource</groupId>
 		<artifactId>camel-fusesource-parent</artifactId>
-		<version>4.10.2-SNAPSHOT</version>
+		<version>4.10.2</version>
 	</parent>
 
 	<groupId>org.fusesource</groupId>
 	<artifactId>camel-sap-parent</artifactId>
-	<version>4.10.2-SNAPSHOT</version>
+	<version>4.10.2</version>
 	<packaging>pom</packaging>
 
 	<name>JBoss Fuse :: Components :: SAP JCO</name>
@@ -35,7 +35,9 @@
 		<!-- Default to upstream/community Camel coordinates in this fork. -->
 		<camel-community-version>4.10.2</camel-community-version>
 		<camel-version>${camel-community-version}</camel-version>
-		<camel.sap.plugin.version>4.10.2-SNAPSHOT</camel.sap.plugin.version>
+		<camel.sap.plugin.version>4.10.2</camel.sap.plugin.version>
+		<sap.jco.version>3.1.13</sap.jco.version>
+		<sap.idoc.version>3.1.4</sap.idoc.version>
 		<mockito.version>3.12.4</mockito.version>
 		<powermock.version>2.0.2</powermock.version>
 		<hamcrest.version>2.1</hamcrest.version>
@@ -84,7 +86,6 @@
 				<groupId>org.apache.camel</groupId>
 				<artifactId>camel-test-spring-junit5</artifactId>
 				<version>${camel-version}</version>
-				<type>bundle</type>
 				<scope>test</scope>
 			</dependency>
 
@@ -151,17 +152,17 @@
 			<dependency>
 				<groupId>com.sap.conn.idoc</groupId>
 				<artifactId>sapidoc3</artifactId>
-				<version>3.1.1</version>
+				<version>${sap.idoc.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.sap.conn.jco</groupId>
 				<artifactId>sapjco3</artifactId>
-				<version>3.1.4</version>
+				<version>${sap.jco.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.sap.conn.jco</groupId>
 				<artifactId>sapjco3</artifactId>
-				<version>3.1.4</version>
+				<version>${sap.jco.version}</version>
 				<type>${envType}</type>
 				<classifier>${envClassifier}</classifier>
 				<scope>test</scope>
@@ -545,46 +546,5 @@
 		<module>camel-sap-component</module>
 	</modules>
 
-	<repositories>
-		<repository>
-			<id>brewroot</id>
-			<name>Brew Repository</name>
-			<url>http://download.eng.bos.redhat.com/brewroot/repos/jb-fuse-6.2-build/latest/maven</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>never</updatePolicy>
-			</releases>
-		</repository>
-		<repository>
-			<id>fusesource-third-party-internal</id>
-			<url>https://repository.jboss.org/nexus/content/repositories/fs-releases/</url>
-			<layout>default</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>RH2</id>
-			<url>http://download.eng.bos.redhat.com/brewroot/repos/jb-fsw-6.2-build/latest/maven</url>
-			<layout>default</layout>
-		</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>RH2</id>
-			<url>http://download.eng.bos.redhat.com/brewroot/repos/jb-fsw-6.2-build/latest/maven</url>
-			<layout>default</layout>
-		</pluginRepository>
-		<pluginRepository>
-			<id>brewroot-plugin</id>
-			<url>http://download.eng.bos.redhat.com/brewroot/repos/jb-fuse-6.2-build/latest/maven</url>
-			<layout>default</layout>
-		</pluginRepository>
-	</pluginRepositories>
+	<!-- Community-only fork: rely on default Maven Central repositories. -->
 </project>
