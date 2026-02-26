@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.sap.conn.jco</groupId>
+  <artifactId>com.sap.conn.jco.os400.ppc64</artifactId>
+  <version>4.10.2</version>
+  <packaging>bundle</packaging>
+
+  <name>SAP JCo Native Wrapper :: OS400 PPC64 (Scaffold)</name>
+  <description>Scaffold only. Not active in reactor.</description>
+
+  <properties>
+    <sapjco.version>3.1.13</sapjco.version>
+    <native.file>libsapjco3.so</native.file>
+  </properties>
+
+  <!-- Intentionally left as scaffold. Do not wire into reactor until finalized. -->
+</project>

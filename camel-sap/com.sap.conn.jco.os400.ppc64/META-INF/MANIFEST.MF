@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: SAP JCo native wrapper for OS400 PPC64 (Scaffold)
+Bundle-SymbolicName: com.sap.conn.jco.os400.ppc64
+Bundle-Version: 4.10.2
+Fragment-Host: com.sap.conn.jco;bundle-version="4.10.2"
+Bundle-NativeCode: libsapjco3.so
