@@ -1,20 +1,33 @@
-# TODO: iSeries (IBM i / AS400 PASE) OSGi fragment scaffold
+# TODO: iSeries (IBM i / AS400 PASE) OSGi Fragment
 
-## Goal
-Create an optional OSGi fragment module for IBM i that can package the SAP JCo native library for iSeries.
+## Current status
+- SAP inputs confirmed from `reference/`:
+  - `sapjco31P_13-70004561.zip`
+  - `sapjidoc31P_4-80004914.zip`
+- JCo version aligned to `3.1.13`.
+- IDoc version aligned to `3.1.4`.
+- OS400 module is active in `repository` profile and `-Prepository` build succeeds.
+- AS400 native classifier used in build profile: `as400-pase_64` (`so`).
 
-## Expected inputs (from SAP SDK)
-- `sapjco3.jar`
-- `libsapjco3.so` (IBM i compatible build)
+## Remaining work
+1. Package native files in OS400 fragment output.
+   - Include `libsapjco3.so` in the module artifact.
+   - Decide whether to also include `os4apilib.so`, `libicudata57.so`, `libicui18n57.so`, `libicuuc57.so`, `libpathextension.so`.
+2. Decide runtime loading strategy in PASE.
+   - Bundle all required `.so` files in fragment, or
+   - Keep only `libsapjco3.so` in bundle and provide dependency libs via system `LIBPATH`.
+3. Add repeatable install script for local Maven setup.
+   - Install `sapjco3.jar` `3.1.13`
+   - Install `sapidoc3.jar` `3.1.4`
+   - Install `sapjco3-3.1.13-as400-pase_64.so`
+4. Validate in IBM i PASE runtime.
+   - Verify bundle resolution and fragment attachment.
+   - Verify RFC + IDoc send/receive route startup and execution.
+5. Document deployment procedure.
+   - Required environment variables (`LIBPATH`, `java.library.path`)
+   - Required files and placement
+   - Smoke-test commands
 
-## Tasks
-1. Confirm exact target ABI/arch for IBM i runtime (for example `ppc64` vs `ppc64le`).
-2. Update `pom.xml` coordinates/classifier/version once final SAP SDK version is chosen.
-3. Place SAP-provided files into `artifacts/` for local install steps.
-4. Update `META-INF/MANIFEST.MF` Bundle-Version/Fragment-Host to match branch policy.
-5. Decide whether to add this module to `repository` profile in parent `pom.xml`.
-6. Validate in PASE runtime with `java.library.path`/`LD_LIBRARY_PATH`.
-
-## Notes
-- This scaffold is intentionally not wired into build yet.
-- No binaries are committed here.
+## Constraints
+- Do not commit SAP binaries (`.jar`, `.so`, ZIP archives) to Git.
+- Keep module community-compatible (no Red Hat-only repository dependencies).
