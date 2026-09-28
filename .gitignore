@@ -20,3 +20,4 @@ dependency-reduced-pom.xml
 **/*.jar
 **/*.test/data/test*.xml
 camel-sap/reference/
+camel-sap/camel-sap-component/src/generated/resources/META-INF/org/

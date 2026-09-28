@@ -341,6 +341,32 @@ host, IDoc, model, runtime, and component bundles.
 
 Validate each target independently:
 
+```bash
+./verify-platform-artifacts.sh --platform linux \
+  --maven-repo /path/to/repository
+
+./verify-platform-artifacts.sh --platform as400 \
+  --maven-repo /path/to/repository
+```
+
+For a combined build, use `--platform all`. The verifier checks component
+schemes, fragment host/version and native selectors, binary formats, required
+native files, plausible SAP payload sizes, and portable community POMs. It
+rejects the tiny synthetic ELF probe used for structural Linux build testing.
+
+To pin deployment inputs to approved SAP downloads, pass expected hashes:
+
+```bash
+SAPJCO_LINUX_SHA256=<approved-native-library-sha256> \
+  ./verify-platform-artifacts.sh --platform linux
+
+SAPJCO_AS400_SHA256=<approved-native-library-sha256> \
+  ./verify-platform-artifacts.sh --platform as400
+```
+
+Artifact verification is necessary but not sufficient. Continue with runtime
+validation:
+
 1. JCo `About` runs under the service account and production environment.
 2. Camel starts without `UnsatisfiedLinkError`, `JCoException`, or missing
    destination/server errors.
