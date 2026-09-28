@@ -18,19 +18,19 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.fusesource</groupId>
+        <groupId>io.github.chiragsanghavi.camel</groupId>
         <artifactId>camel-sap-parent</artifactId>
         <version>4.10.2</version>
     </parent>
 
-    <artifactId>org.fusesource.camel.component.sap.model</artifactId>
+    <artifactId>camel-sap-model</artifactId>
     <packaging>bundle</packaging>
-    <url>http://www.jboss.org/products/fuse/overview/</url>
-    <name>JBoss Fuse :: SAP JCO :: SAP Data Layer :: Model Plugin</name>
+    <url>https://github.com/chiragsanghavi/fuse-components</url>
+    <name>Community Camel SAP :: Data Model</name>
     <description>Provides the Runtime Objects of the SAP Data Layer</description>
     <organization>
-        <name>Red Hat, Inc.</name>
-        <url>http://www.redhat.com</url>
+        <name>Community</name>
+        <url>https://github.com/chiragsanghavi/fuse-components</url>
     </organization>
 
     <properties>
@@ -47,7 +47,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Bundle-SymbolicName>org.fusesource.camel.component.sap.model;singleton:=true</Bundle-SymbolicName>
+                        <Bundle-SymbolicName>io.github.chiragsanghavi.camel.sap.model;singleton:=true</Bundle-SymbolicName>
                         <Bundle-ActivationPolicy>lazy</Bundle-ActivationPolicy>
                         <!-- After switching to SAP libraries 3.1, we really need JDK 1.8 -->
                         <Bundle-RequiredExecutionEnvironment>JavaSE-1.8</Bundle-RequiredExecutionEnvironment>

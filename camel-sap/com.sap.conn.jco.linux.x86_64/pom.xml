@@ -1,138 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
  Copyright 2013 Red Hat, Inc.
 
- Red Hat licenses this file to you under the Apache License, version
- 2.0 (the "License"); you may not use this file except in compliance
- with the License.  You may obtain a copy of the License at
- 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
      http://www.apache.org/licenses/LICENSE-2.0
- 
+
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-  implied.  See the License for the specific language governing
- permissions and limitations under the License.
- -->
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.fusesource</groupId>
-		<artifactId>camel-sap-parent</artifactId>
-		<version>4.10.2</version>
-		<relativePath>..</relativePath>
-	</parent>
-	<groupId>com.sap.conn.jco</groupId>
-	<artifactId>com.sap.conn.jco.linux.x86_64</artifactId>
-	<version>3.1.13</version>
-	<packaging>eclipse-plugin</packaging>
-	<properties>
-		<maven.deploy.skip>true</maven.deploy.skip>
-	</properties>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-maven-plugin</artifactId>
-				<version>1.3.0</version>
-				<extensions>true</extensions>
-			</plugin>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>target-platform-configuration</artifactId>
-				<configuration>
-					<pomDependencies>consider</pomDependencies>
-					<environments>
-						<environment>
-							<os>linux</os>
-							<ws>gtk</ws>
-							<arch>x86_64</arch>
-						</environment>
-					</environments>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
-					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-dependency-jars</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>copy</goal>
-						</goals>
-						<configuration>
-							<stripVersion>true</stripVersion>
-							<outputDirectory>${basedir}</outputDirectory>
-							<artifactItems>
-								<artifactItem>
-									<groupId>com.sap.conn.jco</groupId>
-									<artifactId>sapjco3</artifactId>
-									<version>3.1.13</version>
-									<classifier>linux-x86_64</classifier>
-									<type>so</type>
-									<overWrite>true</overWrite>
-									<destFileName>libsapjco3.so</destFileName>
-								</artifactItem>
-							</artifactItems>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-		<pluginManagement>
-			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>
-											org.apache.maven.plugins
-										</groupId>
-										<artifactId>
-											maven-dependency-plugin
-										</artifactId>
-										<versionRange>
-											[2.1,)
-										</versionRange>
-										<goals>
-											<goal>copy</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore />
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
-	<name>SAP Java Connector v3 - Native Library for Linux (64-bit x86) Plugin</name>
-	<url>http://www.fusesource.org</url>
-	<description>Builds Plugin Fragment exporting the Java Connector v3 Native Library for Linux (64-bit x86) </description>
-	<organization>
-		<name>Red Hat, Inc.</name>
-		<url>http://www.redhat.com</url>
-	</organization>
-	<repositories>
+  <parent>
+    <groupId>io.github.chiragsanghavi.camel</groupId>
+    <artifactId>camel-sap-parent</artifactId>
+    <version>4.10.2</version>
+    <relativePath>..</relativePath>
+  </parent>
 
-	</repositories>
+  <groupId>io.github.chiragsanghavi.camel</groupId>
+  <artifactId>sapjco3-linux-x86_64</artifactId>
+  <version>3.1.13</version>
+  <packaging>bundle</packaging>
+
+  <name>SAP JCo Native Wrapper :: Linux x86_64</name>
+  <description>SAP JCo native wrapper for 64-bit Linux on x86_64</description>
+
+  <properties>
+    <sapjco.version>3.1.13</sapjco.version>
+    <sapjco.native.classifier>linux-x86_64</sapjco.native.classifier>
+    <native.directory>${project.build.directory}/native</native.directory>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>io.github.chiragsanghavi.camel</groupId>
+      <artifactId>sapjco3-osgi</artifactId>
+      <version>${sapjco.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.sap.conn.jco</groupId>
+      <artifactId>sapjco3</artifactId>
+      <version>${sapjco.version}</version>
+      <classifier>${sapjco.native.classifier}</classifier>
+      <type>so</type>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-linux-native-library</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>com.sap.conn.jco</groupId>
+                  <artifactId>sapjco3</artifactId>
+                  <version>${sapjco.version}</version>
+                  <classifier>${sapjco.native.classifier}</classifier>
+                  <type>so</type>
+                  <outputDirectory>${native.directory}</outputDirectory>
+                  <destFileName>libsapjco3.so</destFileName>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Bundle-Name>SAP JCo native wrapper for Linux x86_64</Bundle-Name>
+            <Bundle-SymbolicName>com.sap.conn.jco.linux.x86_64</Bundle-SymbolicName>
+            <Bundle-Version>${project.version}</Bundle-Version>
+            <Bundle-Vendor>SAP SE</Bundle-Vendor>
+            <Fragment-Host>com.sap.conn.jco;bundle-version="${sapjco.version}"</Fragment-Host>
+            <Bundle-NativeCode>libsapjco3.so;osname=Linux;processor=x86-64</Bundle-NativeCode>
+            <Include-Resource>libsapjco3.so=${native.directory}/libsapjco3.so</Include-Resource>
+          </instructions>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>

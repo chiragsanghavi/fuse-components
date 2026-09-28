@@ -1,13 +1,13 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
-Bundle-SymbolicName: org.fusesource.camel.component.sap
+Bundle-SymbolicName: io.github.chiragsanghavi.camel.sap.runtime
 Bundle-Version: 7.12.0.qualifier
 Bundle-Activator: org.fusesource.camel.component.sap.Activator
 Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore.xmi;visibility:=reexport,
- org.fusesource.camel.component.sap.model.edit
+ io.github.chiragsanghavi.camel.sap.model.edit
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Import-Package: com.sap.conn.idoc,

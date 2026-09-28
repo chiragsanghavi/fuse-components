@@ -5,14 +5,14 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.fusesource</groupId>
+    <groupId>io.github.chiragsanghavi.camel</groupId>
     <artifactId>camel-sap-parent</artifactId>
     <version>4.10.2</version>
     <relativePath>..</relativePath>
   </parent>
 
-  <groupId>com.sap.conn.jco</groupId>
-  <artifactId>com.sap.conn.jco.os400.ppc64</artifactId>
+  <groupId>io.github.chiragsanghavi.camel</groupId>
+  <artifactId>sapjco3-os400-ppc64</artifactId>
   <version>3.1.13</version>
   <packaging>bundle</packaging>
 
@@ -21,15 +21,70 @@
 
   <properties>
     <sapjco.version>3.1.13</sapjco.version>
-    <native.file>libsapjco3.so</native.file>
+    <sapjco.native.classifier>as400-pase_64</sapjco.native.classifier>
+    <native.directory>${project.build.directory}/native</native.directory>
   </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>io.github.chiragsanghavi.camel</groupId>
+      <artifactId>sapjco3-osgi</artifactId>
+      <version>${sapjco.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.sap.conn.jco</groupId>
+      <artifactId>sapjco3-native</artifactId>
+      <version>${sapjco.version}</version>
+      <classifier>${sapjco.native.classifier}</classifier>
+      <type>tar</type>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
 
   <build>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack-as400-pase-native-libraries</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>com.sap.conn.jco</groupId>
+                  <artifactId>sapjco3-native</artifactId>
+                  <version>${sapjco.version}</version>
+                  <classifier>${sapjco.native.classifier}</classifier>
+                  <type>tar</type>
+                  <outputDirectory>${native.directory}</outputDirectory>
+                  <includes>libsapjco3.so,os4apilib.so,libicudata57.so,libicui18n57.so,libicuuc57.so,libpathextension.so</includes>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
         <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Bundle-Name>SAP JCo native wrapper for OS400 PPC64</Bundle-Name>
+            <Bundle-SymbolicName>com.sap.conn.jco.os400.ppc64</Bundle-SymbolicName>
+            <Bundle-Version>${project.version}</Bundle-Version>
+            <Bundle-Vendor>SAP SE</Bundle-Vendor>
+            <Fragment-Host>com.sap.conn.jco;bundle-version="${sapjco.version}"</Fragment-Host>
+            <Bundle-NativeCode>libsapjco3.so;os4apilib.so;libicudata57.so;libicui18n57.so;libicuuc57.so;libpathextension.so;osname=OS/400;processor=ppc64</Bundle-NativeCode>
+            <Include-Resource>libsapjco3.so=${native.directory}/libsapjco3.so,os4apilib.so=${native.directory}/os4apilib.so,libicudata57.so=${native.directory}/libicudata57.so,libicui18n57.so=${native.directory}/libicui18n57.so,libicuuc57.so=${native.directory}/libicuuc57.so,libpathextension.so=${native.directory}/libpathextension.so</Include-Resource>
+          </instructions>
+        </configuration>
       </plugin>
     </plugins>
   </build>

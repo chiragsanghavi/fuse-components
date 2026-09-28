@@ -2,13 +2,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.fusesource</groupId>
+		<groupId>io.github.chiragsanghavi.camel</groupId>
 		<artifactId>camel-sap-parent</artifactId>
 		<version>4.10.2</version>
 		<relativePath>..</relativePath>
 	</parent>
-	<groupId>com.sap.conn.idoc</groupId>
-	<artifactId>com.sap.conn.idoc</artifactId>
+	<groupId>io.github.chiragsanghavi.camel</groupId>
+	<artifactId>sapidoc3-osgi</artifactId>
 	<version>3.1.4</version>
 	<packaging>jar</packaging>
 	<name>SAP IDoc Class Library v3 Plugin</name>
@@ -27,6 +27,17 @@
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>${project.build.directory}</directory>
+				<includes>
+					<include>sapidoc3.jar</include>
+				</includes>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

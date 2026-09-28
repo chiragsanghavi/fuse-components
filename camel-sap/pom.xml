@@ -13,19 +13,20 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.fusesource</groupId>
-		<artifactId>camel-fusesource-parent</artifactId>
+		<groupId>org.apache.camel</groupId>
+		<artifactId>camel-parent</artifactId>
 		<version>4.10.2</version>
+		<relativePath />
 	</parent>
 
-	<groupId>org.fusesource</groupId>
+	<groupId>io.github.chiragsanghavi.camel</groupId>
 	<artifactId>camel-sap-parent</artifactId>
 	<version>4.10.2</version>
 	<packaging>pom</packaging>
 
-	<name>JBoss Fuse :: Components :: SAP JCO</name>
-	<description>Provides SAP Camel Component</description>
-	<url>http://www.jboss.org/products/fuse/overview/</url>
+	<name>Community Camel SAP</name>
+	<description>Community SAP JCo and IDoc component for Apache Camel</description>
+	<url>https://github.com/chiragsanghavi/fuse-components</url>
 
 	<properties>
 		<maven.compiler.target>11</maven.compiler.target>
@@ -38,6 +39,7 @@
 		<camel.sap.plugin.version>4.10.2</camel.sap.plugin.version>
 		<sap.jco.version>3.1.13</sap.jco.version>
 		<sap.idoc.version>3.1.4</sap.idoc.version>
+		<skip.sap.native.copy>false</skip.sap.native.copy>
 		<mockito.version>3.12.4</mockito.version>
 		<powermock.version>2.0.2</powermock.version>
 		<hamcrest.version>2.1</hamcrest.version>
@@ -55,7 +57,7 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			<!-- Override inherited Fuse parent tooling snapshots with community Camel version. -->
+			<!-- Keep build tooling aligned with the selected community Camel version. -->
 			<dependency>
 				<groupId>org.apache.camel</groupId>
 				<artifactId>camel-tooling-util</artifactId>
@@ -90,20 +92,20 @@
 			</dependency>
 
 			<dependency>
-				<groupId>org.fusesource</groupId>
-				<artifactId>org.fusesource.camel.component.sap</artifactId>
+				<groupId>io.github.chiragsanghavi.camel</groupId>
+				<artifactId>camel-sap-runtime</artifactId>
 				<version>${camel.sap.plugin.version}</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
-				<groupId>org.fusesource</groupId>
-				<artifactId>org.fusesource.camel.component.sap.model</artifactId>
+				<groupId>io.github.chiragsanghavi.camel</groupId>
+				<artifactId>camel-sap-model</artifactId>
 				<version>${camel.sap.plugin.version}</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
-				<groupId>org.fusesource</groupId>
-				<artifactId>org.fusesource.camel.component.sap.model.edit</artifactId>
+				<groupId>io.github.chiragsanghavi.camel</groupId>
+				<artifactId>camel-sap-model-edit</artifactId>
 				<version>${camel.sap.plugin.version}</version>
 				<scope>compile</scope>
 			</dependency>
@@ -429,21 +431,53 @@
 		<profile>
 			<id>repository</id>
 			<properties>
-				<!-- AS400-first path: avoid Linux-native test artifact fetches in this profile. -->
 				<skip.sap.native.copy>true</skip.sap.native.copy>
 				<envClassifier>as400-pase_64</envClassifier>
 				<envType>so</envType>
 				<native.lib.filename>libsapjco3</native.lib.filename>
 			</properties>
 			<modules>
-				<!-- AS400-first validation path: only build the IBM i/PASE fragment here. -->
 				<module>com.sap.conn.jco.os400.ppc64</module>
-				<!-- Temporarily disabled while iSeries path is stabilized.
+			</modules>
+		</profile>
+		<profile>
+			<id>repository-as400</id>
+			<properties>
+				<sap.repository.platform>as400</sap.repository.platform>
+				<skip.sap.native.copy>true</skip.sap.native.copy>
+				<envClassifier>as400-pase_64</envClassifier>
+				<envType>so</envType>
+				<native.lib.filename>libsapjco3</native.lib.filename>
+			</properties>
+			<modules>
+				<module>com.sap.conn.jco.os400.ppc64</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>repository-linux</id>
+			<properties>
+				<sap.repository.platform>linux</sap.repository.platform>
+				<skip.sap.native.copy>true</skip.sap.native.copy>
+				<envClassifier>linux-x86_64</envClassifier>
+				<envType>so</envType>
+				<native.lib.filename>libsapjco3</native.lib.filename>
+			</properties>
+			<modules>
 				<module>com.sap.conn.jco.linux.x86_64</module>
-				<module>com.sap.conn.jco.osx.x86_64</module>
-				<module>com.sap.conn.jco.win32.x86</module>
-				<module>com.sap.conn.jco.win32.x86_64</module>
-				-->
+			</modules>
+		</profile>
+		<profile>
+			<id>repository-all</id>
+			<properties>
+				<sap.repository.platform>all</sap.repository.platform>
+				<skip.sap.native.copy>true</skip.sap.native.copy>
+				<envClassifier>linux-x86_64</envClassifier>
+				<envType>so</envType>
+				<native.lib.filename>libsapjco3</native.lib.filename>
+			</properties>
+			<modules>
+				<module>com.sap.conn.jco.linux.x86_64</module>
+				<module>com.sap.conn.jco.os400.ppc64</module>
 			</modules>
 		</profile>
 	</profiles>
@@ -488,6 +522,25 @@
 			</plugins>
 		</pluginManagement>
 		<plugins>
+			<!-- Publish self-contained POMs for consumers outside this reactor. -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>flatten-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default-cli</id>
+						<configuration combine.self="override">
+							<outputDirectory>${project.build.directory}</outputDirectory>
+							<flattenedPomFilename>${project.artifactId}-${project.version}.pom</flattenedPomFilename>
+							<updatePomFile>true</updatePomFile>
+							<flattenMode>oss</flattenMode>
+							<pomElements>
+								<parent>remove</parent>
+							</pomElements>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
@@ -518,7 +571,7 @@
 						</goals>
 						<configuration>
 							<file>target/camel-sap-${project.version}-sources.jar</file>
-							<groupId>org.fusesource</groupId>
+							<groupId>io.github.chiragsanghavi.camel</groupId>
 							<artifactId>camel-sap</artifactId>
 							<version>${project.version}</version>
 							<packaging>jar</packaging>
@@ -531,11 +584,8 @@
 	</build>
 	<modules>
 		<!--
-			These 2 SAP bundles are only used at build time as per ENTESB-5801
-			These projects:
-			 - depend on actual SAP libraries stored in brew repository
-			 - use maven-dependency-plugin to copy the SAP libraries to their target/ directory
-			 - will then provide system-scoped dependencies for next projects
+			The SAP JCo and IDoc wrapper bundles consume licensed SAP libraries
+			installed by install-sap-artifacts.sh in the local Maven repository.
 		-->
 		<module>com.sap.conn.idoc</module>
 		<module>com.sap.conn.jco</module>

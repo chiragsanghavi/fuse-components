@@ -14,7 +14,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.fusesource</groupId>
+		<groupId>io.github.chiragsanghavi.camel</groupId>
 		<artifactId>camel-sap-parent</artifactId>
 		<version>4.10.2</version>
 	</parent>
@@ -22,9 +22,9 @@
 	<artifactId>camel-sap</artifactId>
 	<packaging>bundle</packaging>
 
-	<name>JBoss Fuse :: Components :: SAP JCO :: Camel Component</name>
+	<name>Community Camel SAP Component</name>
 	<description>Provides SAP Camel Component Layer</description>
-	<url>http://http://www.jboss.org/products/fuse/overview/</url>
+	<url>https://github.com/chiragsanghavi/fuse-components</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -134,13 +134,13 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.fusesource</groupId>
-			<artifactId>org.fusesource.camel.component.sap</artifactId>
+			<groupId>io.github.chiragsanghavi.camel</groupId>
+			<artifactId>camel-sap-runtime</artifactId>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>org.fusesource</groupId>
-			<artifactId>org.fusesource.camel.component.sap.model</artifactId>
+			<groupId>io.github.chiragsanghavi.camel</groupId>
+			<artifactId>camel-sap-model</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.camel</groupId>
@@ -212,11 +212,11 @@
 				<configuration>
 					<excludeDependencies>${fuse.osgi.exclude.dependencies}</excludeDependencies>
 					<instructions>
-						<Bundle-SymbolicName>org.fusesource.camel-sap</Bundle-SymbolicName>
+						<Bundle-SymbolicName>io.github.chiragsanghavi.camel.sap</Bundle-SymbolicName>
 						<Bundle-Activator>org.fusesource.camel.component.sap.Activator</Bundle-Activator>
 						<Bundle-Name>${project.name}</Bundle-Name>
-						<Bundle-Vendor>Red Hat</Bundle-Vendor>
-						<Bundle-DocURL>http://fabric.fusesource.org/</Bundle-DocURL>
+						<Bundle-Vendor>Community</Bundle-Vendor>
+						<Bundle-DocURL>https://github.com/chiragsanghavi/fuse-components</Bundle-DocURL>
 						<Export-Package> org.fusesource.camel.component.sap;version=${project.version};-split-package:=merge-first, org.fusesource.camel.component.sap.converter;version=${project.version}, org.fusesource.camel.component.sap.model.rfc;version=${project.version}, org.fusesource.camel.component.sap.model.rfc.impl;version=${project.version}, org.fusesource.camel.component.sap.model.idoc;version=${project.version}, org.fusesource.camel.component.sap.model.idoc.impl;version=${project.version}, org.fusesource.camel.component.sap.util;version=${project.version},
 							org.eclipse.emf.ecore,
 							org.eclipse.emf.ecore.util,
@@ -227,7 +227,7 @@
 						</Import-Package>
 						<Private-Package> org.eclipse.emf.common.*, org.eclipse.emf.ecore.*, org.eclipse.emf.edit.*, org.fusesource.camel.component.sap.*;-split-package:=merge-first
 						</Private-Package>
-						<Implementation-Title>Fabric8</Implementation-Title>
+						<Implementation-Title>Community Camel SAP</Implementation-Title>
 						<Implementation-Version>${project.version}</Implementation-Version>
 						<Export-Service>org.apache.camel.spi.ComponentResolver;component=sap</Export-Service>
 						<Include-Resource>{maven-resources},META-INF/jandex.idx=target/classes/META-INF/jandex.idx</Include-Resource>

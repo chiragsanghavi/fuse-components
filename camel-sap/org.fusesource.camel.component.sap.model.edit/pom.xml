@@ -18,22 +18,22 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.fusesource</groupId>
+        <groupId>io.github.chiragsanghavi.camel</groupId>
         <artifactId>camel-sap-parent</artifactId>
         <version>4.10.2</version>
     </parent>
 
-    <artifactId>org.fusesource.camel.component.sap.model.edit</artifactId>
+    <artifactId>camel-sap-model-edit</artifactId>
     <version>4.10.2</version>
     <packaging>bundle</packaging>
 
-    <name>JBoss Fuse :: SAP JCO :: SAP Data Layer :: Edit Plugin</name>
-    <description>Provides EMF Item Providers for Fuse Tooling to manipulate SAP Data Layer models</description>
-    <url>http://www.jboss.org/products/fuse/overview/</url>
+    <name>Community Camel SAP :: Data Model Edit</name>
+    <description>Provides EMF item providers for manipulating SAP data-layer models</description>
+    <url>https://github.com/chiragsanghavi/fuse-components</url>
 
     <organization>
-        <name>Red Hat, Inc.</name>
-        <url>http://www.redhat.com</url>
+        <name>Community</name>
+        <url>https://github.com/chiragsanghavi/fuse-components</url>
     </organization>
 
     <build>
@@ -57,14 +57,14 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Bundle-SymbolicName>org.fusesource.camel.component.sap.model.edit;singleton:=true</Bundle-SymbolicName>
+                        <Bundle-SymbolicName>io.github.chiragsanghavi.camel.sap.model.edit;singleton:=true</Bundle-SymbolicName>
                         <Bundle-Activator>org.fusesource.camel.component.sap.model.SAPEditPlugin$Implementation</Bundle-Activator>
                         <Bundle-ActivationPolicy>lazy</Bundle-ActivationPolicy>
                         <!-- After switching to SAP libraries 3.1, we really need JDK 1.8 -->
                         <Bundle-RequiredExecutionEnvironment>JavaSE-1.8</Bundle-RequiredExecutionEnvironment>
                         <Require-Bundle>
                             org.eclipse.core.runtime,
-                            org.fusesource.camel.component.sap.model;visibility:=reexport,
+                            io.github.chiragsanghavi.camel.sap.model;visibility:=reexport,
                             org.eclipse.emf.edit;visibility:=reexport
                         </Require-Bundle>
                         <Import-Package>!*</Import-Package>
@@ -165,8 +165,8 @@
     <dependencies>
 
         <dependency>
-            <groupId>org.fusesource</groupId>
-            <artifactId>org.fusesource.camel.component.sap.model</artifactId>
+            <groupId>io.github.chiragsanghavi.camel</groupId>
+            <artifactId>camel-sap-model</artifactId>
         </dependency>
 
     </dependencies>
