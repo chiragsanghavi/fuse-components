@@ -1,5 +1,8 @@
 # Camel SAP 4.10.2 on IBM i / AS400 PASE
 
+For the shared Linux/AS400 workflow and side-by-side OS callouts, start with
+[`../INSTALL-LINUX-AS400.md`](../INSTALL-LINUX-AS400.md).
+
 After installing the component, follow
 [`CONFIGURATION-AS400-PASE.md`](CONFIGURATION-AS400-PASE.md) to configure SAP
 destinations, an inbound IDoc server, and Camel routes.

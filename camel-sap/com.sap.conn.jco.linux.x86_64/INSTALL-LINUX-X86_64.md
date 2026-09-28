@@ -1,5 +1,8 @@
 # Camel SAP 4.10.2 on Linux x86_64
 
+For the shared Linux/AS400 workflow and side-by-side OS callouts, start with
+[`../INSTALL-LINUX-AS400.md`](../INSTALL-LINUX-AS400.md).
+
 This guide installs the community Camel SAP component with:
 
 - Apache Camel `4.10.2`
@@ -45,11 +48,9 @@ for the production JVM and operating system.
 
 ## Obtain SAP software
 
-Place the AS400 JCo and platform-neutral IDoc ZIPs already used by this fork
-under `reference/`:
+Place the platform-neutral IDoc ZIP under `reference/`:
 
 ```text
-reference/sapjco31P_13-70004561.zip
 reference/sapjidoc31P_4-80004914.zip
 ```
 
@@ -60,6 +61,9 @@ Also download SAP JCo `3.1.13` for Linux x86_64. The installer accepts any of:
 - the extracted Linux x86_64 `libsapjco3.so`
 
 The Linux package must be the same JCo version as `sapjco3.jar`: `3.1.13`.
+For a Linux-only build, the AS400 JCo ZIP is not required. If the Linux input
+is a raw `libsapjco3.so` rather than an archive, also place its matching
+`sapjco3.jar` directly under `reference/`.
 
 Inspect the downloaded package before installing it:
 
@@ -99,8 +103,8 @@ com.sap.conn.idoc:sapidoc3:jar:3.1.4
 com.sap.conn.jco:sapjco3:so:linux-x86_64:3.1.13
 ```
 
-It also installs the AS400 artifacts because the same local repository can
-then build either supported platform.
+If `reference/sapjco31P_13-70004561.zip` is also present, the script installs
+the AS400 artifacts so the same repository can build both supported platforms.
 
 ## Build
 
